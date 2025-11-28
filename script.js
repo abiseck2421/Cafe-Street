@@ -1,4 +1,4 @@
-// INITIAL HISTORY SETUP 
+// INITIAL HISTORY SETUP
 history.replaceState({ home: true }, "");
 history.pushState({ home: true }, "");
 
@@ -23,7 +23,7 @@ navLinks.forEach(link => {
     link.classList.add("active");
   });
 });
-
+ 
 // MENU OPEN / CLOSE
 function openMenuPanel() {
   navMenu.classList.add("active");
@@ -40,9 +40,6 @@ function closeMenuPanel() {
   closeMenu.style.display = "none";
   openMenu.style.display = "block";
 
-  if (history.state?.menuOpen) {
-    history.back();
-  }
 }
 
 openMenu.addEventListener("click", openMenuPanel);
@@ -76,9 +73,6 @@ function closeSearchPanel() {
     mobileIcons.classList.remove("invisible");
   }, 350);
 
-  if (history.state?.searchOpen) {
-    history.back();
-  }
 }
 
 openSearch.addEventListener("click", openSearchPanel);
@@ -93,8 +87,8 @@ document.addEventListener("click", (e) => {
     closeSearchPanel();
   }
 });
-
-// ANDROID BACK BUTTON (popstate)
+ 
+// ANDROID BACK BUTTON HANDLER
 window.addEventListener("popstate", (event) => {
 
   // CLOSE SEARCH
@@ -109,5 +103,5 @@ window.addEventListener("popstate", (event) => {
     return;
   }
 
-  // ELSE -> NORMAL BACK
+  // ELSE → NORMAL NAVIGATION
 });
