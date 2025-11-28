@@ -1,127 +1,113 @@
-// INITIAL HISTORY STATE
+// INITIAL HISTORY SETUP 
 history.replaceState({ home: true }, "");
-history.pushState({ home: true }, "");   // REQUIRED FOR ANDROID BACK BUTTON
+history.pushState({ home: true }, "");
 
-// NAV LINKS ACTIVE STATE
+// DOM ELEMENTS
 const navLinks = document.querySelectorAll('.nav-item a');
-navLinks.forEach(link => {
-  link.addEventListener('click', function () {
-    navLinks.forEach(nav => nav.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-
-// MENU TOGGLE
 const openMenu = document.querySelector(".open-menu");
 const closeMenu = document.querySelector(".close-menu");
 const navMenu = document.querySelector(".nav-menu");
 const navItems = document.querySelectorAll(".nav-item");
 
-// OPEN MENU
-openMenu.addEventListener("click", () => {
-  navMenu.classList.add("active");
-  document.body.classList.add("no-scroll");
-  openMenu.style.display  = "none";
-  closeMenu.style.display = "block";
+const openSearch = document.querySelector(".open-search");
+const searchBox = document.querySelector(".search-box");
+const searchBack = document.querySelector(".search-back");
+const searchInput = document.querySelector(".search-box input");
+const navLogo = document.querySelector(".nav-logo");
+const mobileIcons = document.querySelector(".mobile-icons");
 
-  // PUSH STATE SO BACK BUTTON CAN CLOSE MENU
-  history.pushState({ menuOpen: true }, "");
+// NAV LINK ACTIVE STATE
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.forEach(a => a.classList.remove("active"));
+    link.classList.add("active");
+  });
 });
 
-// CLOSE MENU
-function closeMenuSmooth() {
+// MENU OPEN / CLOSE
+function openMenuPanel() {
+  navMenu.classList.add("active");
+  document.body.classList.add("no-scroll");
+  openMenu.style.display = "none";
+  closeMenu.style.display = "block";
+
+  history.pushState({ menuOpen: true }, "");
+}
+
+function closeMenuPanel() {
   navMenu.classList.remove("active");
   document.body.classList.remove("no-scroll");
   closeMenu.style.display = "none";
-  openMenu.style.display  = "block";
+  openMenu.style.display = "block";
 
-  // RESET STATE
-  history.replaceState({ home: true }, "");
+  if (history.state?.menuOpen) {
+    history.back();
+  }
 }
 
-// CLOSE MENU WHEN CLOSE ICON
-closeMenu.addEventListener("click", closeMenuSmooth);
+openMenu.addEventListener("click", openMenuPanel);
+closeMenu.addEventListener("click", closeMenuPanel);
+navItems.forEach(item => item.addEventListener("click", closeMenuPanel));
 
-// CLOSE MENU WHEN NAV ITEM CLICKED
-navItems.forEach(item => item.addEventListener("click", closeMenuSmooth));
-
-// CLOSE MENU WHEN CLICK OUTSIDE
 document.addEventListener("click", (e) => {
-  const clickedInside =
-    navMenu.contains(e.target) ||
-    openMenu.contains(e.target) ||
-    closeMenu.contains(e.target);
-
-  if (!clickedInside && navMenu.classList.contains("active")) {
-    closeMenuSmooth();
+  if (navMenu.classList.contains("active") && !navMenu.contains(e.target) && !openMenu.contains(e.target) && !closeMenu.contains(e.target)) {
+    closeMenuPanel();
   }
 });
 
-// MOBILE SEARCH
-const openSearch  = document.querySelector(".open-search");
-const searchBox   = document.querySelector(".search-box");
-const searchBack  = document.querySelector(".search-back");
-const searchInput = document.querySelector(".search-box input");
-const navLogo     = document.querySelector(".nav-logo");
-const mobileIcons = document.querySelector(".mobile-icons");
-
-// OPEN SEARCH
-openSearch.addEventListener("click", () => {
+// SEARCH OPEN / CLOSE
+function openSearchPanel() {
   navLogo.classList.add("invisible");
   mobileIcons.classList.add("invisible");
+
   searchBox.classList.add("active");
   searchInput.focus();
 
-  // PUSH STATE SO BACK BUTTON CAN CLOSE SEARCH
   history.pushState({ searchOpen: true }, "");
-});
+}
 
-// CLOSE SEARCH
-function closeSearchMode() {
+function closeSearchPanel() {
   searchBox.classList.remove("active");
   searchInput.value = "";
   searchInput.blur();
-
-  // RESET STATE
-  history.replaceState({ home: true }, "");
 
   setTimeout(() => {
     navLogo.classList.remove("invisible");
     mobileIcons.classList.remove("invisible");
   }, 350);
+
+  if (history.state?.searchOpen) {
+    history.back();
+  }
 }
 
-// CLOSE SEARCH WHEN PRESSING BACK ARROW
-searchBack.addEventListener("click", closeSearchMode);
+openSearch.addEventListener("click", openSearchPanel);
+searchBack.addEventListener("click", closeSearchPanel);
 
-// CLOSE SEARCH ON ENTER
 searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") closeSearchMode();
+  if (e.key === "Enter") closeSearchPanel();
 });
 
-// CLOSE SEARCH WHEN CLICK OUTSIDE
 document.addEventListener("click", (e) => {
-  if (!searchBox.contains(e.target) &&
-      !openSearch.contains(e.target) &&
-      searchBox.classList.contains("active")) {
-    closeSearchMode();
+  if (searchBox.classList.contains("active") && !searchBox.contains(e.target) && !openSearch.contains(e.target)) {
+    closeSearchPanel();
   }
 });
 
-// ANDROID BACK BUTTON HANDLER
+// ANDROID BACK BUTTON (popstate)
 window.addEventListener("popstate", (event) => {
 
-  // CLOSE SEARCH IF IT IS OPEN
-  if (event.state && event.state.searchOpen) {
-    closeSearchMode();
+  // CLOSE SEARCH
+  if (event.state?.searchOpen && searchBox.classList.contains("active")) {
+    closeSearchPanel();
     return;
   }
 
-  // CLOSE MENU IF IT IS OPEN
-  if (event.state && event.state.menuOpen) {
-    closeMenuSmooth();
+  // CLOSE MENU
+  if (event.state?.menuOpen && navMenu.classList.contains("active")) {
+    closeMenuPanel();
     return;
   }
 
-  // ELSE → NORMAL BACK NAVIGATION
+  // ELSE -> NORMAL BACK
 });
