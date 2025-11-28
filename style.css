@@ -3,6 +3,13 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
+    outline: none;
+}
+
+:focus{
+    outline: none;
 }
 
 html{
@@ -19,7 +26,7 @@ body{
     --clr-1: #FF902A;
     --clr-2: #2F2105; 
     --clr-3: #6B6B6B;
-    --clr-4: #F3E8D7;
+    --clr-4: #F8EBD8;
     --clr-5: #FFFFFF;
 
     /* ----- Spacing ----- */
