@@ -1,5 +1,6 @@
 // INITIAL HISTORY STATE
 history.replaceState({ home: true }, "");
+history.pushState({ home: true }, "");   // REQUIRED FOR ANDROID BACK BUTTON
 
 // NAV LINKS ACTIVE STATE
 const navLinks = document.querySelectorAll('.nav-item a');
@@ -23,6 +24,7 @@ openMenu.addEventListener("click", () => {
   openMenu.style.display  = "none";
   closeMenu.style.display = "block";
 
+  // PUSH STATE SO BACK BUTTON CAN CLOSE MENU
   history.pushState({ menuOpen: true }, "");
 });
 
@@ -33,10 +35,11 @@ function closeMenuSmooth() {
   closeMenu.style.display = "none";
   openMenu.style.display  = "block";
 
+  // RESET STATE
   history.replaceState({ home: true }, "");
 }
 
-// CLOSE MENU WHEN CLOSE ICON CLICKED
+// CLOSE MENU WHEN CLOSE ICON
 closeMenu.addEventListener("click", closeMenuSmooth);
 
 // CLOSE MENU WHEN NAV ITEM CLICKED
@@ -45,7 +48,9 @@ navItems.forEach(item => item.addEventListener("click", closeMenuSmooth));
 // CLOSE MENU WHEN CLICK OUTSIDE
 document.addEventListener("click", (e) => {
   const clickedInside =
-    navMenu.contains(e.target) || openMenu.contains(e.target) || closeMenu.contains(e.target);
+    navMenu.contains(e.target) ||
+    openMenu.contains(e.target) ||
+    closeMenu.contains(e.target);
 
   if (!clickedInside && navMenu.classList.contains("active")) {
     closeMenuSmooth();
@@ -67,6 +72,7 @@ openSearch.addEventListener("click", () => {
   searchBox.classList.add("active");
   searchInput.focus();
 
+  // PUSH STATE SO BACK BUTTON CAN CLOSE SEARCH
   history.pushState({ searchOpen: true }, "");
 });
 
@@ -76,6 +82,7 @@ function closeSearchMode() {
   searchInput.value = "";
   searchInput.blur();
 
+  // RESET STATE
   history.replaceState({ home: true }, "");
 
   setTimeout(() => {
@@ -84,17 +91,19 @@ function closeSearchMode() {
   }, 350);
 }
 
-// CLOSE SEARCH WHEN CLICK ARROW 
+// CLOSE SEARCH WHEN PRESSING BACK ARROW
 searchBack.addEventListener("click", closeSearchMode);
 
-// CLOSE SEARCH WHEN PRESS ENTER KEY
+// CLOSE SEARCH ON ENTER
 searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") closeSearchMode();
 });
 
 // CLOSE SEARCH WHEN CLICK OUTSIDE
 document.addEventListener("click", (e) => {
-  if (!searchBox.contains(e.target) && !openSearch.contains(e.target) && searchBox.classList.contains("active")) {
+  if (!searchBox.contains(e.target) &&
+      !openSearch.contains(e.target) &&
+      searchBox.classList.contains("active")) {
     closeSearchMode();
   }
 });
@@ -102,15 +111,17 @@ document.addEventListener("click", (e) => {
 // ANDROID BACK BUTTON HANDLER
 window.addEventListener("popstate", (event) => {
 
+  // CLOSE SEARCH IF IT IS OPEN
   if (event.state && event.state.searchOpen) {
     closeSearchMode();
     return;
   }
 
+  // CLOSE MENU IF IT IS OPEN
   if (event.state && event.state.menuOpen) {
     closeMenuSmooth();
     return;
   }
 
-  // ELSE → NORMAL BACK
+  // ELSE → NORMAL BACK NAVIGATION
 });
