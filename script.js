@@ -1,6 +1,5 @@
-// INITIAL HISTORY SETUP
+// INITIAL HISTORY STATE
 history.replaceState({ home: true }, "");
-history.pushState({ home: true }, "");
 
 // DOM ELEMENTS
 const navLinks = document.querySelectorAll('.nav-item a');
@@ -8,7 +7,6 @@ const openMenu = document.querySelector(".open-menu");
 const closeMenu = document.querySelector(".close-menu");
 const navMenu = document.querySelector(".nav-menu");
 const navItems = document.querySelectorAll(".nav-item");
-
 const openSearch = document.querySelector(".open-search");
 const searchBox = document.querySelector(".search-box");
 const searchBack = document.querySelector(".search-back");
@@ -16,21 +14,21 @@ const searchInput = document.querySelector(".search-box input");
 const navLogo = document.querySelector(".nav-logo");
 const mobileIcons = document.querySelector(".mobile-icons");
 
-// NAV LINK ACTIVE STATE
+// NAV LINKS ACTIVE STATE
 navLinks.forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.forEach(a => a.classList.remove("active"));
-    link.classList.add("active");
+  link.addEventListener('click', function () {
+    navLinks.forEach(nav => nav.classList.remove('active'));
+    this.classList.add('active');
   });
 });
- 
-// MENU OPEN / CLOSE
+
+// MENU FUNCTIONS
 function openMenuPanel() {
   navMenu.classList.add("active");
   document.body.classList.add("no-scroll");
   openMenu.style.display = "none";
   closeMenu.style.display = "block";
-
+  openSearch.style.display = "none";
   history.pushState({ menuOpen: true }, "");
 }
 
@@ -39,27 +37,29 @@ function closeMenuPanel() {
   document.body.classList.remove("no-scroll");
   closeMenu.style.display = "none";
   openMenu.style.display = "block";
-
+  openSearch.style.display = "block";
+  history.replaceState({ home: true }, "");
 }
 
+// MENU EVENT LISTENERS
 openMenu.addEventListener("click", openMenuPanel);
 closeMenu.addEventListener("click", closeMenuPanel);
 navItems.forEach(item => item.addEventListener("click", closeMenuPanel));
 
+// CLOSE MENU - CLICK OUTSIDE
 document.addEventListener("click", (e) => {
-  if (navMenu.classList.contains("active") && !navMenu.contains(e.target) && !openMenu.contains(e.target) && !closeMenu.contains(e.target)) {
+  const clickedInside = navMenu.contains(e.target) || openMenu.contains(e.target) || closeMenu.contains(e.target);
+  if (!clickedInside && navMenu.classList.contains("active")) {
     closeMenuPanel();
   }
 });
 
-// SEARCH OPEN / CLOSE
+// SEARCH FUNCTIONS
 function openSearchPanel() {
   navLogo.classList.add("invisible");
   mobileIcons.classList.add("invisible");
-
   searchBox.classList.add("active");
   searchInput.focus();
-
   history.pushState({ searchOpen: true }, "");
 }
 
@@ -67,14 +67,15 @@ function closeSearchPanel() {
   searchBox.classList.remove("active");
   searchInput.value = "";
   searchInput.blur();
-
+  history.replaceState({ home: true }, "");
+  
   setTimeout(() => {
     navLogo.classList.remove("invisible");
     mobileIcons.classList.remove("invisible");
   }, 350);
-
 }
 
+// SEARCH EVENT LISTENERS
 openSearch.addEventListener("click", openSearchPanel);
 searchBack.addEventListener("click", closeSearchPanel);
 
@@ -82,13 +83,14 @@ searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") closeSearchPanel();
 });
 
+// CLOSE SEARCH - CLICK OUTSIDE
 document.addEventListener("click", (e) => {
-  if (searchBox.classList.contains("active") && !searchBox.contains(e.target) && !openSearch.contains(e.target)) {
+  if (!searchBox.contains(e.target) && !openSearch.contains(e.target) && searchBox.classList.contains("active")) {
     closeSearchPanel();
   }
 });
- 
-// ANDROID BACK BUTTON HANDLER
+
+// ANDROID BACK BUTTON + BROWSER BACK HANDLER
 window.addEventListener("popstate", (event) => {
 
   // CLOSE SEARCH
@@ -96,12 +98,12 @@ window.addEventListener("popstate", (event) => {
     closeSearchPanel();
     return;
   }
-
+  
   // CLOSE MENU
   if (event.state?.menuOpen && navMenu.classList.contains("active")) {
     closeMenuPanel();
     return;
   }
-
-  // ELSE → NORMAL NAVIGATION
+  
+  //ELSE -> NORMAL NAVIGATION
 });
