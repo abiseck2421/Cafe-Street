@@ -11,59 +11,74 @@
     <title>CafeStreet</title>
 </head>
 <body>
-    <div class="hero-wrapper">
-        <!--HEADER-->
-        <header class="header">
-            <!--NAV-->
-            <div class="container">
-                <nav class="nav">
-                    <div class="nav-logo">
-                        <a href="#">
-                            <img src="images/logo-coffee.png" alt="CafeStreet logo">
-                        </a>
-                    </div>
-                    <div class="nav-menu">
-                        <ul class="nav-list">
-                            <li class="nav-item">
-                                <a href="#about" class="active">About us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#product">Our Product</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#delivery">Delivery</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="search-box">
-                        <ion-icon name="arrow-back-outline" class="search-back"></ion-icon>
-                        <input type="text"  placeholder=" Cappuccino">
-                    </div>
-                    <!--MOBILE ICONS-->
-                    <div class="mobile-icons">
-                        <ion-icon name="search-outline" class="open-search"></ion-icon>
-                        <ion-icon name="menu-outline" class="open-menu"></ion-icon>
-                        <ion-icon name="close-outline" class="close-menu"></ion-icon>
-                    </div>
-                </nav>
-            </div>
-        </header>
-        <!--HERO-->
+    <!--HEADER-->
+    <header class="header">
+        <!--NAV-->
         <div class="container">
-            <section class="hero">
-                <div class="hero-text">
-                    <h1>Enjoy your <span class="colored">coffee</span> before your activity</h1>
-                    <p>Boost your productivity and built your mood with a glass of coffee in the morning</p>
-                    <div class="hero-action-row">
-                        <button class="hero-order-btn">Order now</button>
-                        <a href="#" class="more-link"><span class="colored">More menu</span></a>
-                    </div>
+            <nav class="nav">
+                <div class="nav-logo">
+                    <a href="#">
+                        <img src="images/logo-coffee.png" alt="CafeStreet logo">
+                    </a>
+                </div>    
+                <div class="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#about" class="active">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#product">Our Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#delivery">Delivery</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="hero-image">
-                    <img src="images/hero-coffee-cup.png" alt="Coffee cup">
+                <div class="search-box">
+                    <ion-icon name="arrow-back-outline" class="search-back"></ion-icon>
+                    <input type="text"  placeholder=" Cappuccino">
                 </div>
-            </section>
+                <!--MOBILE ICONS-->
+                <div class="mobile-icons">
+                    <ion-icon name="search-outline" class="open-search"></ion-icon>
+                    <ion-icon name="menu-outline" class="open-menu"></ion-icon>
+                    <ion-icon name="close-outline" class="close-menu"></ion-icon>
+                </div>
+            </nav>
         </div>
-    </div>
+    </header>
+    <!--MAIN-->
+    <main class="main">
+        <!--HERO WRAPPER-->
+        <div class="hero-wrapper">
+            <!--HERO-->
+            <div class="container">
+                <section class="hero">
+                    <div class="hero-text">
+                        <h1>Enjoy your <span class="colored">coffee</span> before your activity</h1>
+                        <p>Boost your productivity and built your mood with a glass of coffee in the morning</p>
+                        <div class="hero-action-row">
+                            <button class="hero-order-btn">Order now</button>
+                            <a href="#" class="more-link"><span class="colored">More menu</span></a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="images/hero-coffee-cup.png" alt="Coffee cup">
+                    </div>
+                </section>
+            </div>
+            <!--PROMO-->
+            <div class="container">
+                <section class="promo">
+                    <h2>Popular Now</h2>
+                    <div class="promo-image">
+                        <img src="images/popular-vanilla-latte.png" alt="Vannila Latte">
+                        <img src="images/popular-hazelnut-latte.png" alt="Hazelnut Latte">
+                        <img src="images/popular-espresso.png" alt="Espresso">
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
