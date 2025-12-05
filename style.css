@@ -38,7 +38,7 @@ body{
     /* ----- Font Size ----- */
     --fs-1: 3rem;
     --fs-2: 2.5rem;
-    --fs-3: 2rem;
+    --fs-3: 1.6rem;
     --fs-4: 1.2rem;
 
     /* ----- Font ----- */
@@ -225,6 +225,61 @@ a{
     transform: scale(1.05);
 }
 
+/* ===== DELIVERY ===== */
+.delivery{
+    margin-top: 5.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-4);
+}
+
+.delivery h2{
+    font-size: var(--fs-2);
+    color: var(--clr-2);
+}
+
+.delivery-steps{
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 70rem;
+    justify-content: space-around;
+}
+
+.delivery-card{
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-1);
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.delivery-card img{
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.delivery-card img:hover{
+    transform: scale(1.05);
+}
+
+.delivery-card h3{
+    font-size: var(--fs-3);
+    color: var(--clr-2);
+}
+
+.delivery-card p{
+    font-size: var(--fs-4);
+    color: var(--clr-3);
+}
+
+.delivery-card p sup{
+    line-height: 0;
+}
+
 /* ===== RESPONSIVENESS ===== */
  
 /* ===== TABLET ===== */
@@ -241,7 +296,7 @@ a{
     /* ----- Font Size ----- */
     --fs-1: 2.6rem;
     --fs-2: 2rem;
-    --fs-3: 1.6rem;
+    --fs-3: 1.2rem;
     --fs-4: 1rem;
 }
  
@@ -309,6 +364,26 @@ a{
 
 .promo-image img{
     width: 14.5rem;
+}
+
+/* ===== DELIVERY ===== */
+.delivery{
+    margin-top: 6.8rem;
+    gap: var(--gap-2);
+}
+
+.delivery-steps{
+    max-width: 55rem;       
+}
+
+.delivery-card{
+   max-width: 16rem;
+   padding: 0.8rem;
+}
+
+.delivery-card img{
+    width: 140px;
+    height: 140px;
 }
 
 }
@@ -522,5 +597,27 @@ ion-icon:hover{
     height: auto;
 }
 
+/* ===== DELIVERY ===== */
+.delivery{
+    margin-top: 3rem;
+    gap: var(--gap-3);
+}
+
+.delivery-steps{
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-3);
+  }
+
+.delivery-card{
+    width: 100%;
+    max-width: 18rem;
+    padding: 0.75rem;
+}
+
+.delivery-card img{
+    width: 120px;
+    height: 120px;
+}
 
 }
