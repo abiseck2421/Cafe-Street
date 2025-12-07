@@ -114,3 +114,30 @@ window.addEventListener("popstate", (event) => {
 
   // ELSE -> NORMAL NAVIGATION
 });
+
+// REVIEW IMAGE & DOTS
+const dots = document.querySelectorAll(".dot");
+const imgBoxes = document.querySelectorAll(".img-box");
+
+function activateIndex(index) {
+    imgBoxes.forEach(box => box.classList.remove("active"));
+    dots.forEach(dot => dot.classList.remove("active"));
+ 
+    imgBoxes[index].classList.add("active");
+    dots[index].classList.add("active");
+}
+
+// DOT CLICK
+dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+        const index = parseInt(dot.getAttribute("data-index"));
+        activateIndex(index);
+    });
+});
+
+// IMAGE CLICK
+imgBoxes.forEach((box, index) => {
+    box.addEventListener("click", () => {
+        activateIndex(index);
+    });
+});
