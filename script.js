@@ -114,100 +114,89 @@ window.addEventListener("popstate", (event) => {
 
   // ELSE -> NORMAL NAVIGATION
 });
- 
-// REVIEW SLIDER – RESPONSIVE
-const slides = [...document.querySelectorAll(".img-box")];
-const dots   = [...document.querySelectorAll(".dot")];
-const frame  = document.querySelector(".review-image");
 
-let current = 0;
-let startX = 0;
-let isMobile = false;
+document.addEventListener("DOMContentLoaded", () => {
 
-// REVIEW: RESET SLIDE STATES
-function resetSlides() {
-  slides.forEach(slide =>
-    slide.classList.remove("active", "prev", "next")
-  );
-  dots.forEach(dot => dot.classList.remove("active"));
-}
+  // REVIEW SLIDER – RESPONSIVE
+  const slides = [...document.querySelectorAll(".img-box")];
+  const dots   = [...document.querySelectorAll(".dot")];
+  const frame  = document.querySelector(".review-image");
 
-// REVIEW: DESKTOP MODE
-function desktopMode() {
-  resetSlides();
+  let current = 0;
+  let startX = 0;
 
-  slides[current].classList.add("active");
-  dots[current].classList.add("active");
-
-  dots.forEach((dot, i) => {
-    dot.onclick = () => activateIndex(i);
-  });
-
-  slides.forEach((sSlide, i) => {
-    slide.onclick = () => activateIndex(i);
-  });
-
-  frame.ontouchstart = null;
-  frame.ontouchend   = null;
-}
-
-function activateIndex(index) {
-  resetSlides();
-  slides[index].classList.add("active");
-  dots[index].classList.add("active");
-  current = index;
-}
-
-// REVIEW: MOBILE MODE
-function mobileMode() {
-  showSlide(current);
-
-  dots.forEach((dot, i) => {
-    dot.onclick = () => showSlide(i);
-  });
-
-  frame.ontouchstart = e => {
-    startX = e.touches[0].clientX;
-  };
-
-  frame.ontouchend = e => {
-    const diff = startX - e.changedTouches[0].clientX;
-
-    if (diff > 50 && current < slides.length - 1) {
-      showSlide(current + 1);
-    } else if (diff < -50 && current > 0) {
-      showSlide(current - 1);
-    }
-  };
-}
-
-function showSlide(index) {
-  if (index < 0 || index >= slides.length) return;
-
-  slides.forEach((slide, i) => {
-    slide.classList.remove("active", "prev", "next");
-
-    if (i === index) slide.classList.add("active");
-    else if (i === index - 1) slide.classList.add("prev");
-    else if (i === index + 1) slide.classList.add("next");
-  });
-
-  dots.forEach(dot => dot.classList.remove("active"));
-  dots[index].classList.add("active");
-
-  current = index;
-}
-
-// REVIEW: MODE SWITCHER
-function checkMode() {
-  const shouldBeMobile = window.innerWidth <= 768;
-
-  if (shouldBeMobile !== isMobile) {
-    isMobile = shouldBeMobile;
-    isMobile ? mobileMode() : desktopMode();
+  // REVIEW: RESET SLIDE STATES
+  function reset() {
+    slides.forEach(s => s.classList.remove("active", "prev", "next"));
+    dots.forEach(d => d.classList.remove("active"));
   }
-}
 
-// REVIEW: INIT
-checkMode();
-window.addEventListener("resize", checkMode);
+  // REVIEW: SHOW SLIDE
+  function show(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
+    reset();
+
+    slides.forEach((s, i) => {
+      if (i === index) s.classList.add("active");
+      else if (i === index - 1) s.classList.add("prev");
+      else if (i === index + 1) s.classList.add("next");
+    });
+
+    dots[index].classList.add("active");
+    current = index;
+  }
+
+  // REVIEW: CLEAR EVENT HANDLER
+  function clearHandlers() {
+    slides.forEach(s => s.onclick = null);
+    dots.forEach(d => d.onclick = null);
+    frame.ontouchstart = frame.ontouchend = null;
+  }
+
+  // REVIEW: DESKTOP MODE
+  function desktopTablet() {
+    clearHandlers();
+    show(current);
+
+    dots.forEach((dot, i) => {
+      dot.onclick = () => show(i);
+    });
+
+    slides.forEach((slide, i) => {
+      slide.style.cursor = "pointer";
+      slide.onclick = () => show(i);
+    });
+  }
+
+  // REVIEW: MOBILE MODE
+  function mobile() {
+    clearHandlers();
+    show(current);
+
+    dots.forEach((dot, i) => {
+      dot.onclick = () => show(i);
+    });
+
+    frame.ontouchstart = e => startX = e.touches[0].clientX;
+    frame.ontouchend = e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (diff > 50) show(current + 1);
+      if (diff < -50) show(current - 1);
+    };
+  }
+
+  // REVIEW: MODE SWITCHER
+  function checkMode() {
+    if (window.innerWidth <= 768) {
+      mobile();
+    } else {
+      desktopTablet();
+    }
+  }
+
+  // REVIEW: INIT
+  checkMode();
+  window.addEventListener("resize", checkMode);
+});
