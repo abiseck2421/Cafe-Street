@@ -975,13 +975,14 @@ ion-icon:hover{
 
 .review-image{
     width: 90%;
-    max-width: 22.5rem;
-    height: 12rem;
-    aspect-ratio: auto;
+    max-width: 14rem;
+    height: auto;
+    aspect-ratio: 3/3.6;
     position: relative;
     overflow: hidden;
     touch-action: pan-y;
     margin-inline: auto;
+    display: block; 
 }
 
 .img-box{
@@ -994,7 +995,9 @@ ion-icon:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-
+    flex: none;
+    max-width: 100%;
+    
     transform: translateX(150%) translateX(-50%);
     opacity: 0;
     transition: transform .35s ease, opacity .25s ease;
@@ -1002,9 +1005,7 @@ ion-icon:hover{
 }
  
 .img-box img{
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
     height: auto;
     object-fit: contain; 
     display: block;
