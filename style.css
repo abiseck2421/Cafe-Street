@@ -28,6 +28,7 @@ body{
     --clr-3: #6B6B6B;
     --clr-4: #F8EBD8;
     --clr-5: #FFFFFF;
+    --clr-6: #4b3310;
 
     /* ----- Spacing ----- */
     --gap-1: 1rem;
@@ -102,7 +103,7 @@ a{
     border-radius: 25px;
     padding: 0.75rem;
     width: 15rem;
-    box-shadow: 0 0 10px gray;
+    box-shadow: 0 0 10px var(--clr-3);
     border: 2px solid transparent;
     outline: none;
 }
@@ -189,6 +190,11 @@ a{
     cursor: pointer;
     background-color: var(--clr-2);
     color: var(--clr-5);
+    transition: background 0.3s ease;
+}
+
+.hero-order-btn:hover{
+    background-color: var(--clr-6);
 }
 
 /* ===== PROMO ===== */
@@ -340,6 +346,11 @@ a{
     background-color: var(--clr-2);
     color: var(--clr-1);
     width: 10rem;
+    transition: background 0.3s ease;
+}
+
+.about-btn:hover{
+    background-color: var(--clr-6);
 }
 
 /* ===== SPECIAL MENU ===== */
@@ -484,6 +495,77 @@ a{
 .dot.active{
     background-color: var(--clr-1);
     transform: scale(1.1);
+}
+
+/* ===== SUBSCRIBE ===== */
+.subscribe{
+    position: relative;
+    height: 34rem;
+}
+
+.subscribe-box{
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    bottom: 6rem;
+    left: 0;
+    background-image: url(images/bg-subscribe.png);
+    background-size: cover;
+    background-position: center;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subscribe-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: var(--gap-2);
+}
+
+.subscribe-content h2{
+    font-size: var(--fs-2);
+    color: var(--clr-5);
+}
+
+.subscribe-content form{
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+}
+
+.subscribe-content input{
+    width: 100%;
+    padding: 1rem 8.75rem 1rem 1.5rem; 
+    border: 2px solid transparent;
+    border-radius: 60px;
+    font-size: var(--fs-4);
+}
+
+.subscribe-content input:focus{
+    border-color: var(--clr-1);
+}
+
+.subscribe-content button{
+    position: absolute;
+    right: 5px;   
+    top: 5px;
+    bottom: 5px;
+    background-color: var(--clr-2);
+    color: var(--clr-5);
+    border-radius: 50px;
+    padding: 0 1.5rem;
+    font-size: var(--fs-4);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.subscribe-content button:hover{
+    background-color: var(--clr-6);
 }
  
 /* ===== RESPONSIVENESS ===== */
@@ -645,6 +727,28 @@ a{
 .img-box{
     max-width: 9rem;
     height: 9.5rem;
+}
+
+/* ===== SUBSCRIBE ===== */
+.subscribe{
+    height: 25rem;
+}
+
+.subscribe-box{
+    top: 3rem;
+    bottom: 3rem;
+}
+  
+.subscribe-content form{
+    max-width: 24rem;
+}
+
+.subscribe-content input{
+    padding: 0.875rem 7.5rem 0.875rem 1.25rem;
+}
+
+.subscribe-content button{
+    padding: 0 1.25rem;
 }
 
 }
@@ -975,7 +1079,7 @@ ion-icon:hover{
 
 .review-image{
     width: 90%;
-    max-width: 14rem;
+    max-width: 13rem;
     height: auto;
     aspect-ratio: 3/3.6;
     position: relative;
@@ -1034,4 +1138,34 @@ ion-icon:hover{
     background: var(--clr-3);
 }
  
+/* ===== SUBSCRIE ===== */
+.subscribe{
+    height: 20rem;
+}
+.subscribe-box{
+    top: 2rem;
+    bottom: 2rem;
+    border-radius: 18px; 
+}
+
+.subscribe-content{
+    padding: 0 1.5rem;
+}
+
+.subscribe-content form{
+    max-width: 18rem;
+    width: 100%;
+}
+
+.subscribe-content input{
+    padding: 0.6rem 6.5rem 0.6rem 1rem;
+}
+
+.subscribe-content button{
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    padding: 0 1rem;
+}
+
 }
